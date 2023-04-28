@@ -9,19 +9,22 @@ import BottomTabs from '../Components/BottomTabs'
 
 const HomeScreen = () => {
   return (
-    <View>
+    <View >
          <StatusBar
        animated={true}
        backgroundColor="black"
        barStyle="light-content" 
            />
      
-    <ScrollView>
+    <ScrollView >
+    <View style={{backgroundColor: 'black', flex: 1}}>
     <Header/>
     <Stories/>
     <Post/>
     <Post/>
     <Post/> 
+
+    </View>
     </ScrollView>
     <BottomTabs/>
     </View>
