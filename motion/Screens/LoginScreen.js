@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
  
 const LoginScreen = () => {
     const { signInWithGoogle } = useAuth()
+    const navigation = useNavigation()
     
 const [loading, setLoading] = useState(false)
     const { user } = useAuth()
@@ -60,12 +61,12 @@ const [loading, setLoading] = useState(false)
                 }
                ]}>
                   <TextInput
+                      style={{color: 'white'}}
                       placeholderTextColor='white'
                       placeholder='Phone Number, Username or Email'
                       autoCapitalize='none'
                       keyboardType='email-address'
                       textContentType='emailAddress'
-                      autoFocus={true}
                       onChangeText={handleChange('email')}
                       onBlur={handleBlur('email')}
                       value={values.email}
@@ -83,6 +84,7 @@ const [loading, setLoading] = useState(false)
                       ]}>
                   <TextInput
                       placeholderTextColor='white'
+                      style={{color: 'white'}}
                       placeholder='Password'
                       autoCapitalize='none'
                       autoCorrect={false}
@@ -107,7 +109,7 @@ const [loading, setLoading] = useState(false)
                    )}
               </Pressable>
               <View style={styles.signupContainer}>
-                  <Text>Don't have an account yet?   </Text>
+                  <Text style={{color: 'white'}}>Don't have an account yet?   </Text>
               <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
                       <Text style={{ color: '#6BB0F5' }} >Signup</Text>
                   </TouchableOpacity>
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
 
   },
   wrapper : {
-    marginTop : 80,
+    marginTop : 60,
     margin: 20,
   }, 
   inputField: {
@@ -142,11 +144,11 @@ const styles = StyleSheet.create({
     padding: 12, 
     backgroundColor: 'black', 
     marginBottom : 10,
-    text: 'white',
+    color: 'white',
     borderWidth : 1,
   }, 
   button: isValid => ({
-    backgroundColor: isValid ? '#0096F6' : '#9ACAF7', 
+    backgroundColor: isValid ? '#0096F6' : '#5CB0FF', 
     alignItems : 'center',
     justifyContent: 'center',
     minHeight: 42, 
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
   }), 
   buttonText: {
     fontWeight: '600',
-    color: '#fff',
+    color: 'black',
     fontSize : 20,
   }, 
   signupContainer: {

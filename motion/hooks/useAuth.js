@@ -8,7 +8,7 @@ const AuthConText = createContext({})
 
 export const AuthProvider = ({ children }) => {
 
-    const [currentUser, setCurrentUser] = useState("loadding...")
+    const [currentUser, setCurrentUser] = useState(null)
 
 
   const userHandler =  user =>

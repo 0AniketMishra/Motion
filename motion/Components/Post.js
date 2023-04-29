@@ -20,7 +20,7 @@ const Post = () => {
     justifyContent: 'flex-end',
     backgroundColor: "#00000aaa",}} >
 
-          <View style={{ height: 220,
+          <View style={{ height: 240,
     backgroundColor: "black",
     padding: 10,
     borderTopLeftRadius: 12,
@@ -33,9 +33,9 @@ const Post = () => {
         <Text style={{fontSize: 17, marginLeft: 3, fontWeight: 'bold', color: 'white'}}>Options</Text>
         </TouchableOpacity>
 
-    <View style={{marginTop: 10}}>
-       <TouchableOpacity  style={{padding: 5, flexDirection: 'row', alignItems: 'center'}}>
-       <Feather name="eye" size={24} color="whit6" />
+    <View style={{marginTop: 12}}>
+       <TouchableOpacity  style={{padding: 6, flexDirection: 'row', alignItems: 'center', margin: 2}}>
+       <Feather name="eye" size={24} color="white" />
            <Text style={{color: 'white', fontSize: 16, marginLeft: 4}}>View Post</Text> 
         </TouchableOpacity> 
         <TouchableOpacity style={{padding: 5, flexDirection: 'row', alignItems: 'center'}}>

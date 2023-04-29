@@ -3,6 +3,7 @@ import React from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import firebase from '../firebase'
+import { Ionicons } from '@expo/vector-icons';
 
 const Header = () => {
     const navigation = useNavigation()
@@ -18,11 +19,14 @@ const Header = () => {
                     <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{route.name}</Text>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row',justifyContent: 'center',padding: 4, marginLeft: 4}}>
-                <TouchableOpacity style={{marginLeft: 4}} onPress={() => navigation.navigate("AddPost")}>
+                <TouchableOpacity style={{marginLeft: 4, width: 40, height: 40, backgroundColor: '#1C1E20', borderRadius: 24, alignItems: 'center', justifyContent: 'center'}} onPress={() => navigation.navigate("AddPost")}>
                 <Entypo name="plus" size={28} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginLeft: 4}}>
+                <TouchableOpacity style={{marginLeft: 4, width: 40, height: 40, backgroundColor: '#1C1E20', borderRadius: 24, alignItems: 'center', justifyContent: 'center'}} onPress={() => navigation.navigate('Search')}>
                 <Entypo  name="magnifying-glass" size={26} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity style={{marginLeft: 4, width: 40, height: 40, backgroundColor: '#1C1E20', borderRadius: 24, alignItems: 'center', justifyContent: 'center'}} onPress={() => navigation.navigate('Search')}>
+                <Ionicons name="notifications-outline" size={26} color="white" />
                 </TouchableOpacity>
                 </View>
             </View>

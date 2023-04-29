@@ -7,9 +7,11 @@ import AddPostScreen from './Screens/AddPostScreen';
 import ShortsScreen from './Screens/ShortsScreen';
 import LoginScreen from './Screens/LoginScreen';
 import useAuth from './hooks/useAuth';
+import SignupScreen from './Screens/SignupScreen';
+import SearchScreen from './Screens/SearchScreen';
 
 const StackNavigator = () => {
-    const Stack = createNativeStackNavigator();
+    const Stack = createNativeStackNavigator(); 
     const { user } = useAuth()
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -19,10 +21,13 @@ const StackNavigator = () => {
   <Stack.Screen name="Chat" component={ChatScreen} options={{animation: 'none',}} />
   <Stack.Screen name="AddPost" component={AddPostScreen} options={{animation: 'none',}} />
   <Stack.Screen name="Shorts" component={ShortsScreen} options={{animation: 'none',}} />
+  <Stack.Screen name="Search" component={SearchScreen} options={{animation: 'none',}} />
   </>
           ):(
          <>
   <Stack.Screen name="Login" component={LoginScreen} options={{animation: 'none',}} />
+  <Stack.Screen name="Signup" component={SignupScreen} options={{animation: 'none',}} />
+
          </>
           )}
         </Stack.Navigator>
