@@ -37,12 +37,22 @@ const BottomTabs = () => {
 
   )}
     </TouchableOpacity>
+
           <Ionicons name="notifications-outline" size={26} color="white" style={{ marginTop: 12 }} />
 
+         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+         {route.name == "Profile" ? (
           <Image
+            style={{ width: 30, height: 30, borderRadius: 50, paddingLeft: 4, marginTop: 10, borderWidth: 2, borderColor: '#0078E9', borderRadius: 50 }}
+            source={{ uri: 'https://pbs.twimg.com/profile_banners/44196397/1576183471/600x200' }}
+          />
+         ) : (
+        <Image
             style={{ width: 30, height: 30, borderRadius: 50, paddingLeft: 4, marginTop: 10 }}
             source={{ uri: 'https://pbs.twimg.com/profile_banners/44196397/1576183471/600x200' }}
           />
+         )}
+         </TouchableOpacity>
         </View>
       </View>
     </View>

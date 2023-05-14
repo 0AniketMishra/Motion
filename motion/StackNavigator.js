@@ -9,6 +9,7 @@ import LoginScreen from './Screens/LoginScreen';
 import useAuth from './hooks/useAuth';
 import SignupScreen from './Screens/SignupScreen';
 import SearchScreen from './Screens/SearchScreen';
+import ProfileScreen from './Screens/ProfileScreen';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator(); 
@@ -22,6 +23,7 @@ const StackNavigator = () => {
   <Stack.Screen name="AddPost" component={AddPostScreen} options={{animation: 'none',}} />
   <Stack.Screen name="Shorts" component={ShortsScreen} options={{animation: 'none',}} />
   <Stack.Screen name="Search" component={SearchScreen} options={{animation: 'none',}} />
+  <Stack.Screen name="Profile" component={ProfileScreen} options={{animation: 'none',}} />
   </>
           ):(
          <>
