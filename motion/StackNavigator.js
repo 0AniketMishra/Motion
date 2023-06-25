@@ -20,7 +20,7 @@ const StackNavigator = () => {
    <>
     <Stack.Screen name="Home" component={HomeScreen} options={{animation: 'none',}} />
   <Stack.Screen name="Chat" component={ChatScreen} options={{animation: 'none',}} />
-  <Stack.Screen name="AddPost" component={AddPostScreen} options={{animation: 'none',}} />
+  <Stack.Screen name="AddPost" component={AddPostScreen} options={{animation: 'fade_from_bottom',}} />
   <Stack.Screen name="Shorts" component={ShortsScreen} options={{animation: 'none',}} />
   <Stack.Screen name="Search" component={SearchScreen} options={{animation: 'none',}} />
   <Stack.Screen name="Profile" component={ProfileScreen} options={{animation: 'none',}} />

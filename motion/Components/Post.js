@@ -3,15 +3,15 @@ import React, { useState, useEffect} from 'react'
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
-
+import axios from 'axios'
 
 const Post = ({ post }) => {
      const [ReplyModal, setReplyModal] = useState([])
     const dimensions = Dimensions.get('window');
     const [tempdata, setTempData] = useState([])
+    console.log(tempdata)
 
     useEffect(() => {
-
       fetch('https://social-backend-three.vercel.app/userdata', {
         method: 'POST',
         headers: {
@@ -21,16 +21,19 @@ const Post = ({ post }) => {
         body: JSON.stringify({
           email: post.email
         })
-      })
+      })  
         .then(res => res.json())
         .then(async data => {
           if (data.message == "User Found") {
             setTempData(data.savedUser)
           }
         })
+
     })
+
+    
   return (
-    <View>
+    <View style={{borderBottomWidth: 0.5, borderBottomColor: '#767676', flex: 1 }}>
  <Modal
         animationType="slide"
         transparent={true}
@@ -89,7 +92,7 @@ const Post = ({ post }) => {
       <View style={{borderWidth: 2, borderColor: '#0078E9', borderRadius: 50}}>
         <Image
           style={{ width: 48, height: 48, borderRadius: 50, paddingLeft: 4 }}
-          source={{  uri: tempdata.profile ? tempdata.profile : 'https://pbs.twimg.com/profile_banners/44196397/1576183471/600x200' }}
+          source={{  uri: tempdata?.profile ? tempdata?.profile : 'https://pbs.twimg.com/profile_banners/44196397/1576183471/600x200' }}
         />
       </View>
       <View>
@@ -97,11 +100,11 @@ const Post = ({ post }) => {
           style={{ marginLeft: 10, fontWeight: "bold", fontSize: 14.5, color: 'white' }}
          
         >
-          {tempdata.username}
+          {tempdata?.username}
         </Text>
         <View style={{ flexDirection: "row", alignItems: 'center' }}>
 
-          <Text style={{ marginLeft: 10, fontSize: 13 ,color: 'white'}}>{tempdata.lowerUsername} | 2 hours ago</Text>
+          <Text style={{ marginLeft: 10, fontSize: 13 ,color: 'white'}}>{tempdata?.lowerUsername} | 2 hours ago</Text>
         </View>
       </View>
     </View>
@@ -141,7 +144,8 @@ const Post = ({ post }) => {
 <View >
   <ScrollView horizontal={true} >
     <View style={{ justifyContent: 'center' }}>
-      
+    {post.image1 && (
+
         <>
           <Image
             style={{
@@ -152,17 +156,19 @@ const Post = ({ post }) => {
               borderRadius: 10,
               marginBottom: 6
             }}
-            source={{ uri: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/2e948896757753.5eb58c727d672.png" }}
+            source={{ uri: post.image1 }}
           />
           <View style={{ position: 'absolute', zIndex: 100, right: 14, top: 8, justifyContent: 'center' }}>
             <Text style={{ backgroundColor: 'black', borderRadius: 6, color: 'white', paddingLeft: 5, paddingRight: 5, fontSize: 12 }}>1/2</Text>
           </View>
         </>
-      
+    )}
     </View>
     <View style={{ justifyContent: 'center' }}>
+    {post.image2 && (
      
         <>
+
           <Image
             style={{
               width: dimensions.width - 20,
@@ -172,13 +178,13 @@ const Post = ({ post }) => {
               borderRadius: 10,
               marginBottom: 6
             }}
-            source={{ uri: "https://i2.wp.com/www.wendyzhou.se/blog/wp-content/uploads/2019/08/uixninja.png?fit=1600%2C1200&ssl=1" }}
+            source={{ uri: post.image2  }}
           />
           <View style={{ position: 'absolute', zIndex: 100, right: 16, top: 8 }}>
             <Text style={{ backgroundColor: 'black', borderRadius: 6, color: 'white', paddingLeft: 5, paddingRight: 5, fontSize: 12 }}>2/2</Text>
           </View>
         </>
-      
+    )}
     </View>
   </ScrollView>
 </View>

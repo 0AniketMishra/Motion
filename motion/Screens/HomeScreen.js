@@ -12,7 +12,12 @@ const HomeScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [posts, setPosts] = useState([{_id: "aaaaa"}])
   const handleRefresh = () => {
-    
+    axios.post('https://social-backend-three.vercel.app/allposts', {})
+    .then(function (response) {
+      setPosts(response.data.post);
+      
+  
+    })
   }
   useEffect(() => {
 
@@ -25,7 +30,7 @@ const HomeScreen = () => {
     
     },[])
   return (
-    <View >
+    <View style={{flex: 1,backgroundColor: 'black'}} >
          <StatusBar
        animated={true}
        backgroundColor="black"
@@ -33,7 +38,7 @@ const HomeScreen = () => {
            />
            
     <ScrollView refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}>
-    <View style={{backgroundColor: 'black', flex: 1, marginBottom: 20}}>
+    <View style={{backgroundColor: 'black',  marginBottom: 100}}>
     <Header/>
     <Stories/>
     {posts.map((post,_id) => (
