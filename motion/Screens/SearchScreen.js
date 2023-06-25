@@ -39,11 +39,12 @@ const SearchScreen = () => {
 }, [keyword])
   return (
     <View style={{backgroundColor: 'black', flex: 1}}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 8, borderRadius: 12}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 8, borderRadius: 12, backgroundColor: 'grey'}}>
       
 <TouchableOpacity onPress={() => navigation.goBack()}>
 <Entypo name="chevron-left" size={24} color="white" />
   </TouchableOpacity>      
+
         <TextInput   placeholder="Search Beyond Possibilities...." style={{ flex: 1, marginRight: 8, marginLeft: 8, color: 'white' }} 
         onChangeText={(text) => {
           setKeyword(text)

@@ -1,13 +1,34 @@
 import { View, Text, Image, TouchableOpacity, ScrollView,Dimensions, Pressable, Modal } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 
 
-const Post = () => {
+const Post = ({ post }) => {
      const [ReplyModal, setReplyModal] = useState([])
     const dimensions = Dimensions.get('window');
+    const [tempdata, setTempData] = useState([])
+
+    useEffect(() => {
+
+      fetch('https://social-backend-three.vercel.app/userdata', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+  
+        },
+        body: JSON.stringify({
+          email: post.email
+        })
+      })
+        .then(res => res.json())
+        .then(async data => {
+          if (data.message == "User Found") {
+            setTempData(data.savedUser)
+          }
+        })
+    })
   return (
     <View>
  <Modal
@@ -68,7 +89,7 @@ const Post = () => {
       <View style={{borderWidth: 2, borderColor: '#0078E9', borderRadius: 50}}>
         <Image
           style={{ width: 48, height: 48, borderRadius: 50, paddingLeft: 4 }}
-          source={{ uri: 'https://pbs.twimg.com/profile_banners/44196397/1576183471/600x200' }}
+          source={{  uri: tempdata.profile ? tempdata.profile : 'https://pbs.twimg.com/profile_banners/44196397/1576183471/600x200' }}
         />
       </View>
       <View>
@@ -76,11 +97,11 @@ const Post = () => {
           style={{ marginLeft: 10, fontWeight: "bold", fontSize: 14.5, color: 'white' }}
          
         >
-          Human Name
+          {tempdata.username}
         </Text>
         <View style={{ flexDirection: "row", alignItems: 'center' }}>
 
-          <Text style={{ marginLeft: 10, fontSize: 12.5 ,color: 'white'}}>@HumanName | 2 hours ago</Text>
+          <Text style={{ marginLeft: 10, fontSize: 13 ,color: 'white'}}>{tempdata.lowerUsername} | 2 hours ago</Text>
         </View>
       </View>
     </View>
@@ -115,7 +136,7 @@ const Post = () => {
 
 //   })}
 >
-  <Text style={{ fontSize: 15, fontWeight: "400", marginBottom: 10, fontFamily: 'Roboto', color: 'white' }}>Working on a big project I was thinking about potential features that could make this appliation better..</Text>
+  <Text style={{ fontSize: 15, fontWeight: "400", marginBottom: 10, fontFamily: 'Roboto', color: 'white' }}>{post.posttext}</Text>
 </TouchableOpacity>
 <View >
   <ScrollView horizontal={true} >
