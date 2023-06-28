@@ -9,7 +9,7 @@ const Post = ({ post }) => {
      const [ReplyModal, setReplyModal] = useState([])
     const dimensions = Dimensions.get('window');
     const [tempdata, setTempData] = useState([])
-    console.log(tempdata)
+   
 
     useEffect(() => {
       fetch('https://social-backend-three.vercel.app/userdata', {
