@@ -6,16 +6,40 @@ import Header from '../Components/Header'
 import Stories from '../Components/Stories'
 import Highlights from '../Components/Highlights'
 import Post from '../Components/Post'
+import { Entypo } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { Ionicons } from '@expo/vector-icons';
 
-const ProfileScreen = () => {
-  const { userdata } = useAuth()
+
+const UserProfileScreen = () => {
+    const route = useRoute()
+  const { userdata } = route.params;
   const [currentTab, setCurrentTab] = useState("Posts")
   const [posts, setPosts] = useState({ "__v": 0, "_id": "649d0c31f332ee28bf2c19c4", "comments": [], "email": "a@gmail.com", "image1": "https://firebasestorage.googleapis.com/v0/b/social-368115.appspot.com/o/Bb?alt=media&token=8b2dce78-7b80-47a2-b098-9786cbf95082", "image2": "https://firebasestorage.googleapis.com/v0/b/social-368115.appspot.com/o/Bb2?alt=media&token=5a21f371-3fc0-43dc-bf9f-4473558ff5f8", "image3": "", "image4": "", "likes": [], "posttext": "A random picture of a project.. " })
+  const navigation = useNavigation()
+
   return (
     <View style={{ flex: 1, backgroundColor: 'black' }}>
       <ScrollView>
       <View>
-        <Header />
+      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 14, backgroundColor: 'black' }}>
+          <View>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={30} color="white" />
+            </TouchableOpacity>
+          </View>
+         
+         
+         <View style={{ marginLeft: 6, flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: 'white' }}>{userdata?.username}</Text>
+            {/* <Text style={{ fontSize: 12, color: 'grey' }}>{lowerUsername}</Text> */}
+          </View>
+          <View style={{marginRight: 10}}>
+          <Ionicons name="md-ellipsis-vertical-sharp" size={22} color="white" />
+          </View>
+        
+          
+        </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
           <View style={{ marginLeft: 18 }}>
             <Image
@@ -111,8 +135,9 @@ const ProfileScreen = () => {
         </View>
       </View>
       </ScrollView>
+      <BottomTabs />
     </View>
   )
 }
 
-export default ProfileScreen
+export default UserProfileScreen

@@ -4,13 +4,13 @@ import Header from '../Components/Header'
 import Stories from '../Components/Stories'
 import { ScrollView } from 'react-native'
 import Post from '../Components/Post'
-import BottomTabs from '../Components/BottomTabs'
 import axios from 'axios'
 
 
 const HomeScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [posts, setPosts] = useState([{_id: "aaaaa"}])
+
   const handleRefresh = () => {
     axios.post('https://social-backend-three.vercel.app/allposts', {})
     .then(function (response) {
@@ -24,11 +24,21 @@ const HomeScreen = () => {
     axios.post('https://social-backend-three.vercel.app/allposts', {})
     .then(function (response) {
       setPosts(response.data.post);
-      
-  
     })
-    
     },[])
+
+
+    
+    const handleScroll = () => {
+      // try{
+      //   axios.post('https://social-backend-three.vercel.app/allposts', {})
+      // .then(function (response) {
+      //   Array.prototype.push.apply(posts,response.data.post)
+      // })
+      // } catch(err){
+      //   console.log(err)
+      // }
+    }
   return (
     <View style={{flex: 1,backgroundColor: 'black'}} >
          <StatusBar
@@ -37,7 +47,7 @@ const HomeScreen = () => {
        barStyle="light-content" 
            />
            
-    <ScrollView refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}>
+    <ScrollView onScroll={handleScroll} refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}>
     <View style={{backgroundColor: 'black',  marginBottom: 100}}>
     <Header/>
     <Stories/>
@@ -46,7 +56,6 @@ const HomeScreen = () => {
 ))}
     </View>
     </ScrollView>
-    <BottomTabs/>
 
     </View>
   )

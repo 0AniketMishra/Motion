@@ -4,12 +4,15 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 import axios from 'axios'
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-const Post = ({ post }) => {
+const Post = ({ post,b }) => {
   const [ReplyModal, setReplyModal] = useState([])
+  const [OptionsModal, setOptionsModal] = useState([])
   const dimensions = Dimensions.get('window');
   const [tempdata, setTempData] = useState([])
-
+  const navigation = useNavigation()
+  const route = useRoute()
 
   useEffect(() => {
     fetch('https://social-backend-three.vercel.app/userdata', {
@@ -19,7 +22,7 @@ const Post = ({ post }) => {
 
       },
       body: JSON.stringify({
-        email: post.email
+        email: post?.email
       })
     })
       .then(res => res.json())
@@ -29,6 +32,8 @@ const Post = ({ post }) => {
         }
       })
 
+   
+
   })
 
 
@@ -37,7 +42,7 @@ const Post = ({ post }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={ReplyModal}
+        visible={OptionsModal}
 
       >
         <View style={{
@@ -56,7 +61,7 @@ const Post = ({ post }) => {
             <View>
               <View style={{ padding: 8, backgroundColor: 'black' }}>
 
-                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => setReplyModal(false)}>
+                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => setOptionsModal(false)}>
                   < Entypo name="chevron-left" size={24} color="white" />
                   <Text style={{ fontSize: 17, marginLeft: 3, fontWeight: 'bold', color: 'white' }}>Options</Text>
                 </TouchableOpacity>
@@ -88,6 +93,10 @@ const Post = ({ post }) => {
         </View>
       </Modal>
 
+
+     
+
+
       <View>
         <View
           style={{ justifyContent: "space-between", flexDirection: "row", margin: 5, }}
@@ -114,9 +123,8 @@ const Post = ({ post }) => {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 4 }}>
 
-            <Pressable onPress={() => setReplyModal(true)} style={{padding: 10}}>
+            <Pressable onPress={() => setOptionsModal(true)} style={{padding: 10}}>
               <Feather name="more-horizontal" size={24} color="white" />
-
             </Pressable>
           </View>
         </View>
@@ -143,14 +151,13 @@ const Post = ({ post }) => {
 
         //   })}
         >
-          <Text style={{ fontSize: 16, fontWeight: "400", marginBottom: 10, fontFamily: 'Roboto', color: 'white' }}>{post.posttext}</Text>
+          <Text style={{ fontSize: 16, fontWeight: "400", marginBottom: 10, fontFamily: 'Roboto', color: 'white' }}>{post?.posttext}</Text>
 
         </TouchableOpacity>
         <View >
           <ScrollView horizontal={true} >
             <View style={{ justifyContent: 'center' }}>
-              {post.image1 && (
-
+              {post?.image1 && (
                 <>
                   <Image
                     style={{
@@ -170,7 +177,7 @@ const Post = ({ post }) => {
               )}
             </View>
             <View style={{ justifyContent: 'center' }}>
-              {post.image2 && (
+              {post?.image2 && (
 
                 <>
 
@@ -192,13 +199,15 @@ const Post = ({ post }) => {
               )}
             </View>
           </ScrollView>
-          <View style={{ paddingLeft: 10, paddingRight: 10, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+          {b &&(
+            <View style={{ paddingLeft: 10, paddingRight: 10, flexDirection: 'row', alignItems: 'center', padding: 8 }}>
             <Text style={{ fontSize: 14, fontFamily: 'Roboto', color: '#7F7F7F' }}>10:34 PM • Jun 28 2023 • </Text>
             <Text style={{ fontSize: 14, fontFamily: 'Roboto', color: 'white', fontWeight: 'bold' }}>3.1M </Text>
             <Text style={{ fontSize: 14, fontFamily: 'Roboto', color: '#7F7F7F' }}>Views </Text>
 
 
           </View>
+          )}
         </View>
 
 
@@ -211,63 +220,123 @@ const Post = ({ post }) => {
 
 
 
-        <View style={{
-          marginLeft: 10, paddingRight: 10, paddingBottom: 4, flexDirection: 'row', alignItems: 'center', borderTopWidth: 0.5, borderTopColor: '#767676',
-        }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: 'center',
-              marginLeft: 4,
-              marginRight: 4,
-              marginTop: 6,
-              marginBottom: 4,
-              width: "auto",
-              justifyContent: 'center',
-
-            }}
-          >
-
-
-
-            <Pressable
-              style={{ flexDirection: "row", padding: 4, alignItems: 'center' }}
-
+        {b ? (
+          <View style={{
+            marginLeft: 10, paddingRight: 10, paddingBottom: 4, flexDirection: 'row', alignItems: 'center', borderTopWidth: 0.5, borderTopColor: "#767676"
+             }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: 'center',
+                marginLeft: 4,
+                marginRight: 4,
+                marginTop: 6,
+                marginBottom: 4,
+                width: "auto",
+                justifyContent: 'center',
+  
+              }}
             >
-              <Ionicons name="heart" size={24} color="red" />
-
-              <Text style={{ fontSize: 14, marginRight: 6, color: 'white', marginLeft: 4 }}>
-                1.2K Likes
-              </Text>
-            </Pressable>
-
-
-
-
+  
+  
+  
+              <Pressable
+                style={{ flexDirection: "row", padding: 4, alignItems: 'center' }}
+  
+              >
+                <Ionicons name="heart" size={24} color="red" />
+  
+                <Text style={{ fontSize: 14, marginRight: 6, color: 'white', marginLeft: 4 }}>
+                  1.2K Likes
+                </Text>
+              </Pressable>
+  
+  
+  
+  
+              <TouchableOpacity onPress={() => navigation.navigate("UserPost",{post: post, userdata: tempdata})}
+                style={{ flexDirection: "row", marginLeft: 6, padding: 4, borderRadius: 4, alignItems: 'center', }}
+              >
+                <Ionicons name="chatbubble-outline" size={24} color="white" />
+                <Text style={{ marginLeft: 4, fontSize: 14, color: "white", marginRight: 4 }}>201 Replies</Text>
+              </TouchableOpacity>
+  
+  
+  
+  
+            </View>
+            <Text style={{ flex: 1 }}></Text>
+  
             <TouchableOpacity
-              style={{ flexDirection: "row", marginLeft: 6, padding: 4, borderRadius: 4, alignItems: 'center', }}
+              style={{ flexDirection: "row", marginLeft: 6, padding: 4, borderRadius: 4, alignItems: 'center' }}
+  
             >
-              <Ionicons name="chatbubble-outline" size={24} color="white" />
-              <Text style={{ marginLeft: 4, fontSize: 14, color: "white", marginRight: 4 }}>201 Replies</Text>
+              <Ionicons name="share-social-outline" size={24} color="white" />
+  
             </TouchableOpacity>
-
-
-
-
+  
+  
+  
           </View>
-          <Text style={{ flex: 1 }}></Text>
-
-          <TouchableOpacity
-            style={{ flexDirection: "row", marginLeft: 6, padding: 4, borderRadius: 4, alignItems: 'center' }}
-
-          >
-            <Ionicons name="share-social-outline" size={24} color="white" />
-
-          </TouchableOpacity>
-
-
-
-        </View>
+        ) : (
+          <View style={{
+            marginLeft: 10, paddingRight: 10, paddingBottom: 4, flexDirection: 'row', alignItems: 'center', 
+             }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: 'center',
+                marginLeft: 4,
+                marginRight: 4,
+                marginTop: 6,
+                marginBottom: 4,
+                width: "auto",
+                justifyContent: 'center',
+  
+              }}
+            >
+  
+  
+  
+              <Pressable
+                style={{ flexDirection: "row", padding: 4, alignItems: 'center' }}
+  
+              >
+                <Ionicons name="heart" size={24} color="red" />
+  
+                <Text style={{ fontSize: 14, marginRight: 6, color: 'white', marginLeft: 4 }}>
+                  1.2K Likes
+                </Text>
+              </Pressable>
+  
+  
+  
+  
+              <TouchableOpacity onPress={() => navigation.navigate("UserPost",{post: post, userdata: tempdata})}
+                style={{ flexDirection: "row", marginLeft: 6, padding: 4, borderRadius: 4, alignItems: 'center', }}
+              >
+                <Ionicons name="chatbubble-outline" size={24} color="white" />
+                <Text style={{ marginLeft: 4, fontSize: 14, color: "white", marginRight: 4 }}>201 Replies</Text>
+              </TouchableOpacity>
+  
+  
+  
+  
+            </View>
+            <Text style={{ flex: 1 }}></Text>
+  
+            <TouchableOpacity
+              style={{ flexDirection: "row", marginLeft: 6, padding: 4, borderRadius: 4, alignItems: 'center' }}
+  
+            >
+              <Ionicons name="share-social-outline" size={24} color="white" />
+  
+            </TouchableOpacity>
+  
+  
+  
+          </View>
+        )}
 
       </View>
     </View>

@@ -13,7 +13,6 @@ const ChatScreen = () => {
        />
       <Header/>
       <ChatList/>
-<BottomTabs/>
     </View>
   )
 }

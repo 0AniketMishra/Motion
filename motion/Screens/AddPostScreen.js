@@ -10,6 +10,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { uploadBytes, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const AddPostScreen = () => {
   const navigation = useNavigation()
@@ -26,7 +27,7 @@ const AddPostScreen = () => {
 
 
 
-
+  const { userdata } = useAuth()
   const [uri, setUri] = useState("")
 
   const uploadImage = async () => {
@@ -113,8 +114,8 @@ const AddPostScreen = () => {
           </View>
           <View>
             <Image
-              style={{ width: 34, height: 34, borderRadius: 50, }}
-              source={{ uri: "https://lh3.googleusercontent.com/a/AItbvmld8x4l-U0o2L28Ipg6VMny5NvPVM0sOjiqjlT8=s96-c" }}
+              style={{ width: 38, height: 38, borderRadius: 50, }}
+              source={{ uri: userdata.profile }}
             />
           </View>
           <View style={{ marginLeft: 6, flex: 1, flexDirection: 'row', alignItems: 'center' }}>
@@ -127,7 +128,7 @@ const AddPostScreen = () => {
             <Text style={styles.buttonText} >Post</Text>
           </Pressable>
         </View>
-
+        
 
         <View>
           <View >
@@ -141,31 +142,39 @@ const AddPostScreen = () => {
           </View> */}
             <View style={{ padding: 12, flexDirection: 'row', backgroundColor: 'black' }}>
               <TouchableOpacity style={{}} onPress={uploadImage}>
-                <MaterialIcons name="image" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#0078E9', borderRadius: 18, padding: 5 }} />
+                <MaterialIcons name="image" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#1A1A1A', borderRadius: 18, padding: 5 }} />
               </TouchableOpacity>
               <TouchableOpacity >
-                <MaterialIcons name="poll" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#0078E9', borderRadius: 18, padding: 5 }} />
+                <MaterialIcons name="poll" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#1A1A1A', borderRadius: 18, padding: 5 }} />
               </TouchableOpacity>
               <TouchableOpacity >
-                <MaterialIcons name="emoji-emotions" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#0078E9', borderRadius: 18, padding: 5 }} />
+                <MaterialIcons name="emoji-emotions" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#1A1A1A', borderRadius: 18, padding: 5 }} />
               </TouchableOpacity>
               <TouchableOpacity >
-                <MaterialIcons name="my-location" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#0078E9', borderRadius: 18, padding: 5 }} />
+                <MaterialIcons name="my-location" size={24} color="#D4E4F4" style={{ marginLeft: 5, backgroundColor: '#1A1A1A', borderRadius: 18, padding: 5 }} />
               </TouchableOpacity>
             </View>
+
+
+           
+
+
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'black', }}>
-            <Feather name="edit-3" size={24} color="white" style={{ marginLeft: 6 }} />
+          <View style={{ flexDirection: 'row', backgroundColor: 'black', }}>
+            {/* <Feather name="edit-3" size={24} color="white" style={{ marginLeft: 6 }} /> */}
             <TextInput
               style={styles.input}
               value={text}
               placeholderTextColor="white"
               onChangeText={onChangeText}
-              placeholder="Say Something..."
+              placeholder="What's Happening."
               multiline={true}
             />
           </View>
         </View>
+
+
+        
 
         {image && !loading ? (
           <View style={{ padding: 10, backgroundColor: 'black' }}>
@@ -176,7 +185,7 @@ const AddPostScreen = () => {
                     <TouchableOpacity>
                       <Image source={{ uri: localImg2 }} style={{ margin: 2, width: 175, height: 175, borderRadius: 12 }} />
                     </TouchableOpacity>
-                    <TouchableOpacity  onPress={() => setImage2(null)} style={{ position: 'absolute', right: 0, margin: 6, backgroundColor: 'black', borderRadius: 23 }}>
+                    <TouchableOpacity onPress={() => setImage2(null)} style={{ position: 'absolute', right: 0, margin: 6, backgroundColor: 'black', borderRadius: 23 }}>
                       < Entypo name="cross" size={22} color="white" />
                     </TouchableOpacity>
                     <View style={{ position: 'absolute', bottom: 0, right: 0, margin: 6, backgroundColor: 'black', borderRadius: 23, padding: 4, paddingLeft: 10, paddingRight: 10 }}>
@@ -189,19 +198,19 @@ const AddPostScreen = () => {
 
                 )}
                 {image && (
-                 <View style={{marginLeft: 7}}>
-                  <TouchableOpacity>
+                  <View style={{ marginLeft: 7 }}>
+                    <TouchableOpacity>
                       <Image source={{ uri: localImg }} style={{ margin: 2, width: 175, height: 175, borderRadius: 12 }} />
                     </TouchableOpacity >
-                 <TouchableOpacity  onPress={() => setImage(null)} style={{ position: 'absolute', right: 0, margin: 6, backgroundColor: 'black', borderRadius: 23 }}>
+                    <TouchableOpacity onPress={() => setImage(null)} style={{ position: 'absolute', right: 0, margin: 6, backgroundColor: 'black', borderRadius: 23 }}>
                       < Entypo name="cross" size={22} color="white" />
                     </TouchableOpacity>
-                    <TouchableOpacity  style={{ position: 'absolute', bottom: 0, right: 0, margin: 6, backgroundColor: 'black', borderRadius: 23, padding: 4, paddingLeft: 10, paddingRight: 10 }}>
+                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, margin: 6, backgroundColor: 'black', borderRadius: 23, padding: 4, paddingLeft: 10, paddingRight: 10 }}>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ color: 'white', fontWeight: 'bold' }}>Edit</Text>
                       </View>
                     </TouchableOpacity>
-                 </View>
+                  </View>
 
                 )}
                 {image3 && (
@@ -225,12 +234,12 @@ const AddPostScreen = () => {
 
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center',  padding: 4, borderRadius: 10, justifyContent: 'center', paddingLeft: 8, paddingRight: 8 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', padding: 4, borderRadius: 10, justifyContent: 'center', paddingLeft: 8, paddingRight: 8 }}>
                 <Feather name="user-plus" size={18} color="#6F6F6F" />
                 <Text style={{ fontSize: 13, marginLeft: 4, color: "#6F6F6F", fontWeight: 'bold' }}>Tag People.</Text>
               </View>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center',  padding: 4, borderRadius: 10, marginLeft: 2, justifyContent: 'center', paddingLeft: 8, paddingRight: 8 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', padding: 4, borderRadius: 10, marginLeft: 2, justifyContent: 'center', paddingLeft: 8, paddingRight: 8 }}>
                 <Feather name="edit" size={18} color="#6F6F6F" />
                 <Text style={{ fontSize: 13, marginLeft: 4, color: "#6F6F6F", fontWeight: 'bold' }}>Add Description.</Text>
               </View>
@@ -266,15 +275,15 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    backgroundColor: '#0096F6',
+    backgroundColor: '#1A1A1A',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 32,
+    minHeight: 40,
     borderRadius: 24,
-    width: 64,
+    width: 100,
   },
   buttonText: {
-    fontWeight: '600',
+    fontWeight: 'bold',
     color: '#fff',
     fontSize: 16,
 
@@ -287,12 +296,11 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     padding: 8,
-    marginRight: 22,
-    textAlignVertical: 'center',
     minHeight: 60,
-    backgroundColor: 'black',
     color: 'white',
-
+    flex: 1,
+    marginHorizontal: 15,
+    borderRadius: 8,
   },
 
 

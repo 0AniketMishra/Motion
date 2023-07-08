@@ -1,9 +1,7 @@
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Touchable } from 'react-native'
 import React, {useState} from 'react'
 import { Ionicons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-
-const Stories = () => {
+const Highlights = () => {
     const [data, setData] = useState([
         {"id": "1","Name": "Elon Musk", "lowerUsername" : '@elonmusk', "profile": "https://www.howitworksdaily.com/wp-content/uploads/2016/04/elonmusk.jpg" },
         {"id": "2", "Name": "Jeff Bezos", "lowerUsername" : '@jeffbezos', "profile": "https://compote.slate.com/images/59210cce-a982-468f-9979-d456b2909f0a.jpg" },
@@ -17,11 +15,7 @@ const Stories = () => {
      <View style={{ backgroundColor: 'black',}}>
          <View style={{ marginBottom: 12,marginTop: 10, marginLeft: 5,  }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity>
-          <View style={{marginLeft: 4, marginRight: 4,  width: 55, height: 55, backgroundColor: '#1A1A1A', borderRadius: 50, alignItems: "center", justifyContent: "center", alignItems: 'center' }}>
-          <Entypo name="plus" size={30} color="white" />
-            </View>
-          </TouchableOpacity>
+        
             
             {data?.map(info => {
                  return(
@@ -58,4 +52,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Stories
+export default Highlights

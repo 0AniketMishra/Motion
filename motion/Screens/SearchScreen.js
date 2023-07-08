@@ -101,16 +101,13 @@ const SearchScreen = () => {
       <View style={{ marginTop: 8 }}>
         {/* <Text style={{color: 'white', fontWeight: 'bold' , fontSize: 18, margin: 4, marginLeft: 6, marginRight: 6}}>People You May Know : </Text> */}
         <ScrollView>
-          {data.map((user, index) => (
+          {currentTab == "Accounts" ? (
+<View >
+{data.map((user, index) => (
             <TouchableOpacity key={user._id} style={{ padding: 10, borderRadius: 9, margin: 4, flexDirection: 'row', alignItems: 'center', marginLeft: 6, marginRight: 6,  }}
               onPress={() =>
                 navigation.navigate("UserProfile", {
-                  username: user.username,
-                  lowerUsername: user.lowerUsername,
-                  profile: user.profile,
-                  email: user.email,
-                  about: '',
-                  _id: user._id
+                userdata: user
                 })
               }
             >
@@ -149,6 +146,16 @@ const SearchScreen = () => {
             </TouchableOpacity>
           ))}
 
+</View>
+          ) : currentTab == "Trending" ? (
+            <View style={{ alignItems: 'center', justifyContent: 'center',height: 200 }}>
+              
+              <Text style={{color: 'white', fontWeight: 'bold', }}>Nothing To Show At The Moment..</Text>
+              
+            </View>
+          ) : (
+            <View></View>
+          )}
         </ScrollView>
 
 
