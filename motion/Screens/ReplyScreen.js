@@ -2,9 +2,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Pressable, 
 import React, { useState, useEffect } from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialIcons } from '@expo/vector-icons';
-import firebase from '.././firebase';
-import { onSnapshot, query, doc, collection, where, updateDoc } from 'firebase/firestore'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import useAuth from '../hooks/useAuth';
 import * as ImagePicker from 'expo-image-picker';
 import { uploadBytes, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
@@ -13,76 +11,174 @@ import { Feather } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const ReplyScreen = () => {
-    const { userdata } = useAuth()
+    const { userdata,user } = useAuth()
     const [text, onChangeText] = useState("");
+    const [text2, onChangeText2] = useState("");
+    const [Reply2,setReply2] = useState(false)
+    const [Reply3,setReply3] = useState(false)
+    const [Reply4,setReply4] = useState(false)
+    const route = useRoute()
+    const { post,info } = route.params
+    
+
     const navigation = useNavigation()
+
+
+    const SubmitPost = () => {
+        try {
+            fetch("https://social-backend-three.vercel.app/addpost", {
+              method: 'POST',
+              headers: {
+                'Content-Type': "application/json"
+              },
+              body: JSON.stringify({
+                email: user.email,
+                // image1: image,
+                // image2: image2,
+                // image3: image3,
+                // image4: image4,
+                posttext: text, 
+                replyingOn: post._id, 
+                replyingTo: post._id,
+                replyingEmail: post.email
+              })
+            })
+              .then(res => res.json())
+          }
+          catch (err) {
+            console.log(err)
+          }
+          navigation.goBack()
+          onChangeText("")
+    }
     return (
-        <View style={{ backgroundColor: 'black', flex: 1 }}>
-             <View style={{ flexDirection: 'row', alignItems: 'center', padding: 14, backgroundColor: 'black' }}>
-              <View>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons name="arrow-back" size={30} color="white" />
-              </TouchableOpacity>
-             </View>
-         
-         
-         <View style={{ marginLeft: 6, flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", color: 'white' }}>Reply </Text>
-            {/* <Text style={{ fontSize: 12, color: 'grey' }}>{lowerUsername}</Text> */}
-          </View>
-          <Pressable style={styles.button}>
+        <ScrollView style={{ backgroundColor: 'black', flex: 1 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 14, backgroundColor: 'black' }}>
+                <View>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="arrow-back" size={30} color="white" />
+                    </TouchableOpacity>
+                </View>
+
+
+                <View style={{ marginLeft: 6, flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 18, fontWeight: "bold", color: 'white' }}>Reply </Text>
+                    {/* <Text style={{ fontSize: 12, color: 'grey' }}>{lowerUsername}</Text> */}
+                </View>
+                <Pressable style={styles.button} onPress={SubmitPost}>
                     <Text style={styles.buttonText} >Post</Text>
                 </Pressable>
-        
-          
-        </View>
 
-            <View style={{ margin: 6,zIndex: 99, maxHeight: 300 }}>
+
+            </View>
+
+            <View style={{ margin: 6, zIndex: 99, maxHeight: 300 }}>
                 {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ color: 'white' }}>Replying To </Text>
                     <Text style={{ color: '#82C2FF', textDecorationLine: 'underline' }}>{userdata.lowerUsername}</Text>
                 </View> */}
-                <View style={{ flexDirection: 'row', marginTop: 8,  padding: 2, borderRadius: 8 }}>
+                <View style={{ flexDirection: 'row', marginTop: 8, padding: 2, borderRadius: 8 }}>
                     <View>
                         <Image
-                            style={{ width: 38, height: 38, borderRadius: 50, }}
-                            source={{ uri: userdata.profile }}
+                            style={{ width: 40, height: 40, borderRadius: 50, }}
+                            source={{ uri: info.profile }}
                         />
                     </View>
                     <View style={{ marginLeft: 10, marginRight: 10 }}>
-                        <Text style={{ color: 'white', marginRight: 18 }}>{userdata.username}</Text>
-                        <Text style={{ color: 'white', marginRight: 20 }}>The texts starts from here which would represent the posttext forwarded by the user post screen.</Text>
+                        <Text style={{ color: 'white', marginRight: 18 }}>{info.username}</Text>
+                        <Text style={{ color: 'white', marginRight: 21 }}>{post.posttext}</Text>
                     </View>
                 </View>
             </View>
 
-            <View style={{borderLeftWidth: 1,borderLeftColor: 'grey', position: 'absolute',left: 26,top: 122, bottom: 400 }}>
-           <Text style={{color: 'white', flex: 1}}></Text>
+            <View style={{ borderLeftWidth: 2.5, borderLeftColor: 'grey', position: 'absolute', left: 26, top: 122 }}>
+                <Text style={{ color: 'white', flex: 1, height: 4000 }}></Text>
             </View>
-            
-            <View style={{marginTop: 8, zIndex: 99}}>
-            <View style={{margin: 6, flexDirection: 'row', marginTop: 8,  padding: 2, borderRadius: 8 }}>
+
+            <View style={{ marginTop: 8, zIndex: 99 }}>
+                <View style={{ margin: 6, flexDirection: 'row', marginTop: 8, padding: 2, borderRadius: 8 }}>
                     <View>
                         <Image
-                            style={{ width: 38, height: 38, borderRadius: 50, }}
+                            style={{ width: 40, height: 40, borderRadius: 50, }}
                             source={{ uri: userdata.profile }}
                         />
                     </View>
-                    <View style={{ marginLeft: 10, marginRight: 10 }}>
+                    <View style={{ marginLeft: 10, marginRight: 10,minHeight: 70 }}>
+                        <Text style={{ color: 'white', marginRight: 18 }}>{userdata.username}</Text>
+                        
+                        <TextInput
+                            style={{ color: 'white', marginRight: 35, }}
+                            value={text}
+                            placeholderTextColor="grey"
+                            onChangeText={onChangeText}
+                            placeholder="Drop Your Message Here"
+                            multiline={true}
+
+                        />
+                       {/* Main */}
+                    </View>
+                </View>
+                {Reply2 &&(
+                    <View style={{ margin: 6, flexDirection: 'row', marginTop: 8, padding: 2, borderRadius: 8 }}>
+                    <View>
+                        <Image
+                            style={{ width: 40, height: 40, borderRadius: 50, }}
+                            source={{ uri: userdata.profile }}
+                        />
+                    </View>
+                    <View style={{ marginLeft: 10, marginRight: 10,minHeight: 70,flex: 1 }}>
                         <Text style={{ color: 'white', marginRight: 18 }}>{userdata.username}</Text>
                         <TextInput
-                        style={{color: 'white'}}
-              value={text}
-              placeholderTextColor="grey"
-              onChangeText={onChangeText}
-              placeholder="Drop Your Message Here"
-              multiline={true}
-            />
+                            style={{ color: 'white', marginRight: 35, }}
+                            value={text2}
+                            placeholderTextColor="grey"
+                            onChangeText={onChangeText2}
+                            placeholder="Drop Your Message Here"
+                            multiline={true}
+
+                        />
+                       {/* Main */}
                     </View>
                 </View>
+                )}
+                {Reply3 &&(
+                    <View style={{ margin: 6, flexDirection: 'row', marginTop: 8, padding: 2, borderRadius: 8 }}>
+                    <View>
+                        <Image
+                            style={{ width: 40, height: 40, borderRadius: 50, }}
+                            source={{ uri: userdata.profile }}
+                        />
+                    </View>
+                    <View style={{ marginLeft: 10, marginRight: 10,minHeight: 70,flex: 1 }}>
+                        <Text style={{ color: 'white', marginRight: 18 }}>{userdata.username}</Text>
+                        <TextInput
+                            style={{ color: 'white', marginRight: 35, }}
+                            value={text2}
+                            placeholderTextColor="grey"
+                            onChangeText={onChangeText2}
+                            placeholder="Drop Your Message Here"
+                            multiline={true}
+
+                        />
+                       {/* Main */}
+                    </View>
+                </View>
+                )}
+                <Pressable style={{padding: 8,flexDirection: 'row', alignItems: 'center'}} onPress={() => Reply2 ? setReply3(true) : setReply2(true)}>
+                  <View style={{}}>
+                        <Image
+                            style={{ width: 40, height: 40, borderRadius: 50,opacity: 0.75, zIndex: 99 }}
+                            source={{ uri: userdata.profile }}
+                        />
+                        
+                    </View>
+                    <View style={{marginLeft: 10}}>
+                        <Text style={{color: 'grey'}}>Add another reply.</Text>
+                    </View>
+                </Pressable>
             </View>
 
-        </View>
+        </ScrollView>
     )
 }
 

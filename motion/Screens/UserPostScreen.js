@@ -33,6 +33,11 @@ const UserPostScreen = () => {
 
                 <View style={{ flex: 1, marginBottom: 100 }}>
                     <Post post={post} b={true}/>
+                    
+                       {/* <View style={{flexDirection: 'row', alignItems: 'center',borderBottomColor: '#373737',borderBottomWidth: 1 }}>
+                       <Text style={{color: 'white',fontWeight: 'bold', fontSize: 18, margin: 10,marginRight: 4}}>Replying To:</Text>
+                        <Text style={{color: 'cyan',fontWeight: 'bold', fontSize: 18, }}>{userdata.lowerUsername}</Text>
+                       </View> */}
                     <Post post={post} />
                     
                    
@@ -40,8 +45,8 @@ const UserPostScreen = () => {
             </ScrollView>
             <View style={{}}>
                       
-                        <Pressable onPress={() => navigation.navigate("Reply")} style={{ flexDirection: 'row', alignItems: 'center',backgroundColor: '#1A1A1A',  }}>
-                            <View style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+            <Pressable onPress={() => navigation.navigate("Reply",{post: post,info: userdata})} style={{ flexDirection: 'row', alignItems: 'center', borderTopColor: '#373737',borderTopWidth: 1 }}>
+                            <View style={{ padding: 7, flexDirection: 'row', alignItems: 'center' }}>
                                 
                                 <View >
                                     <Image

@@ -3,14 +3,17 @@ import React, { useState, useEffect } from 'react'
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import axios from 'axios'
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-const Post = ({ post,b }) => {
+const Post = ({ post,b,r }) => {
   const [ReplyModal, setReplyModal] = useState([])
   const [OptionsModal, setOptionsModal] = useState([])
   const dimensions = Dimensions.get('window');
   const [tempdata, setTempData] = useState([])
+  const [replydata, setReplyData] = useState([])
+  const [replypost, setReplyPost] = useState([])
   const navigation = useNavigation()
   const route = useRoute()
 
@@ -31,7 +34,41 @@ const Post = ({ post,b }) => {
           setTempData(data.savedUser)
         }
       })
+if(post.replyingEmail != "" ){
+  fetch('https://social-backend-three.vercel.app/userdata', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
 
+    },
+    body: JSON.stringify({
+      email: post?.replyingEmail
+    })
+  })
+    .then(res => res.json())
+    .then(async data => {
+      if (data.message == "User Found") {
+        setReplyData(data.savedUser)
+      }
+    })
+
+
+    fetch('https://social-backend-three.vercel.app/postdata', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+
+    },
+    body: JSON.stringify({
+      postId: post?.replyingTo
+    })
+  })
+    .then(res => res.json())
+    .then(async data => {
+        setReplyPost(data.post)
+      
+    })
+}
    
 
   })
@@ -116,8 +153,10 @@ const Post = ({ post,b }) => {
                 {tempdata?.username}
               </Text>
               <View style={{ flexDirection: "row", alignItems: 'center' }}>
-
-                <Text style={{ marginLeft: 10, fontSize: 12, color: 'white' }}>{tempdata?.lowerUsername}  </Text>
+              <Text style={{ marginLeft: 10, fontSize: 13, color: 'white' }}>{tempdata?.lowerUsername}  </Text>
+              
+ {post.replyingOn !="none" &&(<AntDesign name="swap" size={18} color="white" />)}
+{post.replyingTo != "none" &&( <Text style={{marginLeft: 5, fontSize: 13, color: 'cyan', }}>{replydata?.lowerUsername}</Text>)}
               </View>
             </View>
           </View>
@@ -151,6 +190,13 @@ const Post = ({ post,b }) => {
 
         //   })}
         >
+
+          <View>
+            <Text style={{color: 'white'}}>Replying To</Text>
+            <View>
+              
+            </View>
+          </View>
           <Text style={{ fontSize: 16, fontWeight: "400", marginBottom: 10, fontFamily: 'Roboto', color: 'white' }}>{post?.posttext}</Text>
 
         </TouchableOpacity>
