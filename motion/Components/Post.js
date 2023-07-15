@@ -66,15 +66,15 @@ if(post.replyingEmail != "" ){
     .then(res => res.json())
     .then(async data => {
         setReplyPost(data.post)
-      
+
     })
 }
-   
+
 
   })
 
 
-  return (
+  return (   
     <View style={{ borderBottomWidth: 0.5, borderBottomColor: '#767676', flex: 1 }}>
       <Modal
         animationType="slide"
@@ -191,15 +191,27 @@ if(post.replyingEmail != "" ){
         //   })}
         >
 
-          <View>
-            <Text style={{color: 'white'}}>Replying To</Text>
-            <View>
-              
-            </View>
-          </View>
-          <Text style={{ fontSize: 16, fontWeight: "400", marginBottom: 10, fontFamily: 'Roboto', color: 'white' }}>{post?.posttext}</Text>
-
+        
+          <Text style={{ fontSize: 16, fontWeight: "400", marginBottom: 8, fontFamily: 'Roboto', color: 'white' }}>{post?.posttext}</Text>
+          
         </TouchableOpacity>
+        {post.replyingEmail != "" &&(
+           <View style={{margin: 4}}>
+           <View style={{  flexDirection: 'row', padding: 7, borderRadius: 8,borderWidth: 1,borderColor: "#373737" }}>
+                   <View>
+                       <Image
+                           style={{ width: 40, height: 40, borderRadius: 50, }}
+                           source={{ uri: replydata?.profile }}
+                       />
+                   </View>
+                   <View style={{ marginLeft: 10, marginRight: 10,flex: 1 }}>
+                   {/* */}
+                       <Text style={{ color: 'white', marginRight: 18 }}>{replydata?.username}</Text>
+                       <Text numberOfLines={2} style={{ color: 'white', marginRight: 18 }}>{replypost.map(post => post.posttext)}</Text>
+                   </View> 
+               </View>
+         </View>
+         )}
         <View >
           <ScrollView horizontal={true} >
             <View style={{ justifyContent: 'center' }}>
